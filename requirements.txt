@@ -1,2 +1,2 @@
 Flask==3.0.3
-ollama==0.11.10
+ollama==0.1.6
