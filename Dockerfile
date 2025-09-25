@@ -8,9 +8,7 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install dependencies
-RUN apk add --no-cache --virtual .build-deps build-base libffi-dev openssl-dev cargo \
-    && pip install --no-cache-dir -r requirements.txt \
-    && apk del .build-deps
+RUN pip install -r requirements.txt
 
 # Copy project files
 COPY . .
