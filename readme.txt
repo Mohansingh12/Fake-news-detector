@@ -16,13 +16,13 @@ This project aims to detect fake news using machine learning techniques. The cod
 1. Clone the repository.
 2. Install dependencies: `pip install -r requirements.txt`
 3. Ensure Ollama is installed and Gemma 3 model is available.
-4. Run the main script: `python main.py`
-5. Follow prompts to input news articles for prediction.
+4. Run the main Flask app: `python app.py`
+5. Open http://localhost:5000 and use the UI.
 
 ## Project Structure
 
-- `main.py` - Main script to run the application
-- `models/` - Saved models
+- `app.py` - Flask application
+- `api.py` - Ollama integration
 
 ## License
 

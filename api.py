@@ -1,21 +1,17 @@
-import ollama
+import os,requests
+from flask import Flask, request
 
-client = ollama.Client()
+# Replace string URL client with a proper Ollama client instance
+OLLAMA_ENDPOINT = os.getenv("OLLAMA_ENDPOINT", "http://ollama:11434")
 
 def get_answer(question):
     
     model = "gemma3"
-    prompt =  question +"Answer with yes or no."
+    prompt = f"{question}\nAnswer with yes or no."
 
-    response = client.generate(model=model, prompt=prompt)
-
-    # Normalize to a plain string ("Yes."/"No.") regardless of return shape
-    if isinstance(response, dict):
-        return response.get('response') or response.get('message') or str(response)
-
-    # Try attribute-style access from response objects
-    answer_attr = getattr(response, 'response', None)
-    if answer_attr:
-        return answer_attr
-
-    return str(response)
+    data = request.get_json(force=True)
+    prompt = data.get("prompt","Hello from Flask + Ollama!")
+    payload = {"model":"gemma3", "prompt": prompt, "stream": False}
+    r = requests.post(f"{OLLAMA_ENDPOINT}/api/generate", json=payload, timeout=120)
+    r.raise_for_status()
+    return str(r)

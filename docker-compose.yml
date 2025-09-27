@@ -1,0 +1,27 @@
+
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: fake_news
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+           - capabilities: ["gpu"]
+
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fake_news_app
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
